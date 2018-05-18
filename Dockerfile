@@ -93,6 +93,10 @@ RUN apt-get purge -y --auto-remove \
   && rm -rf /var/tmp/* \
   && rm -rf /tmp/*
 
+# forward request and error logs to docker log collector
+RUN ln -sf /dev/stdout /usr/local/apache/logs/access_log \
+	&& ln -sf /dev/stderr /usr/local/apache/logs/error_log
+
 COPY start-apache /usr/local/bin 
 
 RUN chmod +x /usr/local/bin/start-apache
