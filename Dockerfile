@@ -18,7 +18,10 @@ RUN apt-get update \
      make \
      gcc \
      wget \
-  && rm -rf /var/lib/apt/lists/* 
+  && rm -rf /var/lib/apt/lists/*
+
+RUN groupadd -g 500 www-data && \
+    useradd -u 500 -g 500 www-data
 
 WORKDIR ${TMP_DIR}
 
@@ -104,6 +107,8 @@ RUN chmod +x /usr/local/bin/start-apache
 WORKDIR ${HTTP_PREFIX}/conf
 
 COPY httpd.conf httpd.conf
+
+RUN chmod -R www-data:www-data /usr/local/apache
 
 WORKDIR /
 
