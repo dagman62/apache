@@ -1,10 +1,10 @@
 FROM ubuntu:xenial
 USER root
 
-ENV APR_FILE apr-1.6.3
+ENV APR_FILE apr-1.6.5
 ENV APRU_FILE apr-util-1.6.1
-ENV HTTP_FILE httpd-2.4.33
-ENV PHP_FILE php-7.2.5
+ENV HTTP_FILE httpd-2.4.38
+ENV PHP_FILE php-7.2.14
 ENV HTTP_PREFIX /usr/local/apache
 ENV TMP_DIR /tmp
 
@@ -18,16 +18,13 @@ RUN apt-get update \
      make \
      gcc \
      wget \
-  && rm -rf /var/lib/apt/lists/*
-
-RUN groupadd -g 500 www-data && \
-    useradd -u 500 -g 500 www-data
+  && rm -rf /var/lib/apt/lists/* 
 
 WORKDIR ${TMP_DIR}
 
 # grab and extract apr
 
-RUN wget http://www-us.apache.org/dist//apr/${APR_FILE}.tar.gz \ 
+RUN wget http://www-us.apache.org/dist/apr/${APR_FILE}.tar.gz \ 
   && tar -zxvf ${APR_FILE}.tar.gz \
   && rm -f ${APR_FILE}.tar.gz
 
@@ -42,7 +39,7 @@ WORKDIR ${TMP_DIR}
 
 # grab apr and extract
 
-RUN wget http://www-us.apache.org/dist//apr/${APRU_FILE}.tar.gz \
+RUN wget http://www-us.apache.org/dist/apr/${APRU_FILE}.tar.gz \
   && tar -zxvf ${APRU_FILE}.tar.gz \
   && rm -f ${APRU_FILE}.tar.gz
 
@@ -107,8 +104,6 @@ RUN chmod +x /usr/local/bin/start-apache
 WORKDIR ${HTTP_PREFIX}/conf
 
 COPY httpd.conf httpd.conf
-
-RUN chmod -R www-data:www-data /usr/local/apache
 
 WORKDIR /
 
