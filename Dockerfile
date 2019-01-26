@@ -18,7 +18,12 @@ RUN apt-get update \
      make \
      gcc \
      wget \
-  && rm -rf /var/lib/apt/lists/* 
+     libtool \
+     libbz2-dev \
+     libghc-curl-dev \
+     libpng-dev \
+     libghc-ldap-dev \
+  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR ${TMP_DIR}
 
@@ -104,6 +109,8 @@ RUN chmod +x /usr/local/bin/start-apache
 WORKDIR ${HTTP_PREFIX}/conf
 
 COPY httpd.conf httpd.conf
+
+COPY php.ini /usr/local/lib/php.ini
 
 WORKDIR /
 
