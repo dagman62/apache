@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  visualizer:
+    image: dockersamples/visualizer
+    ports:
+      - '8080:8080'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+  web:
+    image: dagman62/apache:2.4.38
+    ports:
+      - '80:80'
+    deploy:
+      replicas: 3
+      placement:
+        constraints:
+          - node.role == worker
+
