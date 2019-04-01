@@ -1,4 +1,10 @@
 node {
+    agent any
+
+    options {
+        buildDiscarder(logRatator(numToKeepStr: '3'))
+    }
+    
     def app
 
     stage('Clone repository') {
