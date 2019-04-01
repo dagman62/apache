@@ -1,11 +1,10 @@
-pipeline {
-    agent any
 
+node {
+    
     options {
       buildDiscarder(logRotator(numToKeepStr: '3'))   
     }
-}
-node {
+    
     def app
 
     stage('Clone repository') {
