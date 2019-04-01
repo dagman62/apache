@@ -11,13 +11,13 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("dagman62/apache")
+        app = docker.build("public/apache")
     }
 
     stage('Push image') {
         /* Finally, we'll push the image into Docker Hub */
 
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+        docker.withRegistry('https://spartan.example.com', 'registry') {
             app.push('2.4.39')
             app.push('latest')
         }

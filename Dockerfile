@@ -3,8 +3,8 @@ USER root
 
 ENV APR_FILE apr-1.6.5
 ENV APRU_FILE apr-util-1.6.1
-ENV HTTP_FILE httpd-2.4.38
-ENV PHP_FILE php-7.2.14
+ENV HTTP_FILE httpd-2.4.39
+ENV PHP_FILE php-7.2.16
 ENV HTTP_PREFIX /usr/local/apache
 ENV TMP_DIR /tmp
 
@@ -18,11 +18,6 @@ RUN apt-get update \
      make \
      gcc \
      wget \
-     libtool \
-     libbz2-dev \
-     libghc-curl-dev \
-     libpng-dev \
-     libghc-ldap-dev \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR ${TMP_DIR}
@@ -44,7 +39,7 @@ WORKDIR ${TMP_DIR}
 
 # grab apr and extract
 
-RUN wget http://www-us.apache.org/dist/apr/${APRU_FILE}.tar.gz \
+RUN wget --no-check-certificate http://www-us.apache.org/dist/apr/${APRU_FILE}.tar.gz \
   && tar -zxvf ${APRU_FILE}.tar.gz \
   && rm -f ${APRU_FILE}.tar.gz
 
@@ -76,7 +71,7 @@ WORKDIR ${TMP_DIR}
 
 # grab php7 and extract it
 
-RUN wget http://us1.php.net/distributions/${PHP_FILE}.tar.gz \
+RUN wget --no-check-certificate http://us1.php.net/distributions/${PHP_FILE}.tar.gz \
   && tar -zxvf ${PHP_FILE}.tar.gz \
   && rm -f ${PHP_FILE}.tar.gz
 
